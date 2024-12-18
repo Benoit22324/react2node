@@ -3,6 +3,7 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import moviesRouter from "./router/moviesRouter.js";
 import usersRouter from "./router/usersRouter.js";
+import housesRouter from "./router/housesRouter.js";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -16,6 +17,6 @@ db.on("connected", () => console.log("DB connecté"));
 
 app.use(express.json());
 app.use(express.urlencoded({extended : false}))
-app.use(moviesRouter, usersRouter);
+app.use(moviesRouter, usersRouter, housesRouter);
 
 app.listen(PORT, () => console.log(`Serveur allumé sur le port ${PORT}`));

@@ -8,6 +8,8 @@ usersRouter.get("/users", async (req, res) => {
     try {
         const users = await User.find();
 
+        if(users.length < 1) return res.status(400).json({message: "No User Created"});
+
         return res.json(users);
     } catch(err) {
         return res.status(500).json({message: `Error: ${err.message}`});
@@ -28,7 +30,7 @@ usersRouter.get("/user/:id", async (req, res) => {
     }
 })
 
-usersRouter.post("/addUser", userCreationVerification, async (req, res) => {
+usersRouter.post("/addUser", userCreationVerification, (req, res) => {
     const {firstName, lastName, email, age, password} = req.body;
 
     try {
