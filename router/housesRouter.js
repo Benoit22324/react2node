@@ -1,6 +1,7 @@
 import { Router } from "express";
 import House from "../models/House.js";
 import { houseCreationVerification } from "../middlewares/houseCreationVerification.js";
+import { houseExistingVerification } from "../middlewares/houseExistingVerification.js";
 
 const housesRouter = Router();
 
@@ -16,13 +17,11 @@ housesRouter.get("/houses", async (req, res) => {
     }
 })
 
-housesRouter.get("/house/:id", async (req, res) => {
+housesRouter.get("/house/:id", houseExistingVerification, async (req, res) => {
     const {id} = req.params;
 
     try {
         const house = await House.findOne({_id: id});
-
-        if (!house) return res.status(400).json({message: "House Not Found"});
 
         return res.json(house)
     } catch(err) {
@@ -43,14 +42,11 @@ housesRouter.post("/addHouse", houseCreationVerification, (req, res) => {
     }
 })
 
-housesRouter.put("/updateHouse/:id", async (req, res) => {
+housesRouter.put("/updateHouse/:id", houseExistingVerification, async (req, res) => {
     const {id} = req.params;
 
     try {
         const house = await House.findOne({_id: id});
-
-        if (!house) return res.status(400).json({message: "House Not Found"});
-
         const updatedHouse = await house.updateOne(req.body);
 
         if (updatedHouse.modifiedCount < 1) return res.json({message: "No Changes Detected"});
@@ -61,15 +57,11 @@ housesRouter.put("/updateHouse/:id", async (req, res) => {
     }
 })
 
-housesRouter.delete("/deleteHouse/:id", async (req, res) => {
+housesRouter.delete("/deleteHouse/:id", houseExistingVerification, async (req, res) => {
     const {id} = req.params;
 
     try {
-        const house = await House.findOne({_id: id});
-
-        if (!house) return res.status(400).json({message: "House Not Found"});
-
-        await house.deleteOne();
+        await House.deleteOne({_id: id});
 
         return res.json({message: "House Deleted"});
     } catch(err) {
