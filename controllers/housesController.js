@@ -24,11 +24,11 @@ export const getHouseById = async (req, res) => {
     }
 }
 
-export const addNewHouse = (req, res) => {
+export const addNewHouse = async (req, res) => {
     const {name, type, size, owner} = req.body;
 
     try {
-        const newHouse = new House({name, type, size, owner: owner ? owner : null});
+        const newHouse = await new House({name, type, size, owner: owner ? owner : null});
 
         newHouse.save();
         return res.json({message: "House added"});

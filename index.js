@@ -5,6 +5,7 @@ import cors from "cors"
 import moviesRouter from "./router/moviesRouter.js";
 import usersRouter from "./router/usersRouter.js";
 import housesRouter from "./router/housesRouter.js";
+import authRouter from "./router/authRouter.js";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -19,7 +20,7 @@ db.on("connected", () => console.log("DB connecté"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended : false}))
-app.use(moviesRouter, usersRouter, housesRouter);
+app.use(moviesRouter, usersRouter, housesRouter, authRouter);
 
 app.get("/", (req, res) => {
     res.send("Bienvenue sur le port 3002");

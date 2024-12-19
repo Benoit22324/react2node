@@ -2,10 +2,11 @@ import { Router } from "express";
 import { houseCreationVerification } from "../middlewares/houseCreationVerification.js";
 import { houseExistingVerification } from "../middlewares/houseExistingVerification.js";
 import { addNewHouse, deleteHouse, getAllHouses, getHouseById, updateHouseInfo } from "../controllers/housesController.js";
+import { tokenVerification } from "../middlewares/tokenVerification.js";
 
 const housesRouter = Router();
 
-housesRouter.get("/houses", getAllHouses);
+housesRouter.get("/houses", tokenVerification, getAllHouses);
 
 housesRouter.get("/house/:id", houseExistingVerification, getHouseById);
 

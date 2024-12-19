@@ -27,11 +27,11 @@ export const getUserById = async (req, res) => {
     }
 }
 
-export const addNewUser = (req, res) => {
+export const addNewUser = async (req, res) => {
     const {firstName, lastName, email, age, password} = req.body;
 
     try {
-        const newUser = new User({firstName, lastName, email, age, password});
+        const newUser = await new User({firstName, lastName, email, age, password});
 
         newUser.save();
         return res.json({message: "User added"});
