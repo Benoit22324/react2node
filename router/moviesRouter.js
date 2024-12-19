@@ -3,10 +3,6 @@ import {movies} from "../data/moviesData.js"
 
 const moviesRouter = Router();
 
-moviesRouter.get("/", (req, res) => {
-    res.send("Bienvenue sur le port 3002");
-});
-
 moviesRouter.get("/movies", (req, res) => {
     res.send(movies);
 });

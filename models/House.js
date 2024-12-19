@@ -14,7 +14,10 @@ const houseSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    owner: String
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    }
 })
 
 export default mongoose.model("House", houseSchema);
