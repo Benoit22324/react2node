@@ -16,7 +16,7 @@ export const getHouseById = async (req, res) => {
     const {id} = req.params;
 
     try {
-        const house = await House.findOne({_id: id});
+        const house = await House.findOne({_id: id}).populate("owner", "firstName lastName email");
 
         return res.json(house)
     } catch(err) {
